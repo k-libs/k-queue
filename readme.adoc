@@ -16,7 +16,7 @@ A pure Kotlin FIFO queue implementation.
 
 [source, kotlin]
 ----
-// Create a queue from a varargs!
+// Create a queue from varargs!
 val queue = queueOf(1, 2, 3)
 
 // Create a queue from a collection!
@@ -24,6 +24,13 @@ val queue = queueOf(list(1, 2, 3))
 
 // Create a queue the boring way!
 val queue = Queue<Int>()
+
+// Get crazy with it!
+val queue = Queue<Int>(
+  initialCapacity = 16,
+  scaleFactor = 2F,
+  maxSize = 64
+)
 
 // Put stuff into a queue!
 queue.append(4)

@@ -1,0 +1,24 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:io.klibs.collections////PointingToDeclaration/queue/io.klibs.collections/index.html
+$dokka.location:io.klibs.collections//max/#kotlin.Int#kotlin.Int/PointingToDeclaration/queue/io.klibs.collections/max.html
+$dokka.location:io.klibs.collections//min/#kotlin.Int#kotlin.Int/PointingToDeclaration/queue/io.klibs.collections/min.html
+$dokka.location:io.klibs.collections//queueOf/#kotlin.Array[TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/queue/io.klibs.collections/queue-of.html
+$dokka.location:io.klibs.collections//queueOf/#kotlin.collections.Iterable[TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/queue/io.klibs.collections/queue-of.html
+$dokka.location:io.klibs.collections/Queue///PointingToDeclaration/queue/io.klibs.collections/-queue/index.html
+$dokka.location:io.klibs.collections/Queue/Queue/#kotlin.Int#kotlin.Float#kotlin.Int/PointingToDeclaration/queue/io.klibs.collections/-queue/-queue.html
+$dokka.location:io.klibs.collections/Queue/append/#TypeParam(bounds=[kotlin.Any?])/PointingToDeclaration/queue/io.klibs.collections/-queue/append.html
+$dokka.location:io.klibs.collections/Queue/capacity/#/PointingToDeclaration/queue/io.klibs.collections/-queue/capacity.html
+$dokka.location:io.klibs.collections/Queue/contains/#TypeParam(bounds=[kotlin.Any?])/PointingToDeclaration/queue/io.klibs.collections/-queue/contains.html
+$dokka.location:io.klibs.collections/Queue/containsAll/#kotlin.collections.Collection[TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/queue/io.klibs.collections/-queue/contains-all.html
+$dokka.location:io.klibs.collections/Queue/get/#kotlin.Int/PointingToDeclaration/queue/io.klibs.collections/-queue/get.html
+$dokka.location:io.klibs.collections/Queue/hasNext/#/PointingToDeclaration/queue/io.klibs.collections/-queue/has-next.html
+$dokka.location:io.klibs.collections/Queue/isEmpty/#/PointingToDeclaration/queue/io.klibs.collections/-queue/is-empty.html
+$dokka.location:io.klibs.collections/Queue/iterator/#/PointingToDeclaration/queue/io.klibs.collections/-queue/iterator.html
+$dokka.location:io.klibs.collections/Queue/maxSize/#/PointingToDeclaration/queue/io.klibs.collections/-queue/max-size.html
+$dokka.location:io.klibs.collections/Queue/next/#/PointingToDeclaration/queue/io.klibs.collections/-queue/next.html
+$dokka.location:io.klibs.collections/Queue/peekNext/#/PointingToDeclaration/queue/io.klibs.collections/-queue/peek-next.html
+$dokka.location:io.klibs.collections/Queue/plusAssign/#TypeParam(bounds=[kotlin.Any?])/PointingToDeclaration/queue/io.klibs.collections/-queue/plus-assign.html
+$dokka.location:io.klibs.collections/Queue/size/#/PointingToDeclaration/queue/io.klibs.collections/-queue/size.html
+io.klibs.collections
+
