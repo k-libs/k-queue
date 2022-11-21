@@ -1,0 +1,4 @@
+= K-Libs Multi-Platform Library Repo Template
+
+A template repository with the boilerplate taken care of.
+
