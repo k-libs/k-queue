@@ -1,4 +1,38 @@
-= K-Libs Multi-Platform Library Repo Template
+= K-Queue
+:source-highlighter: highlightjs
+:lib-version: 0.1.0
 
-A template repository with the boilerplate taken care of.
+A pure Kotlin FIFO queue implementation.
+
+== Import
+
+.build.gradle.kts
+[source, kotlin, subs="verbatim,attributes"]
+----
+  implementation("io.klibs:queue:{lib-version}")
+----
+
+== Usage
+
+[source, kotlin]
+----
+// Create a queue from a varargs!
+val queue = queueOf(1, 2, 3)
+
+// Create a queue from a collection!
+val queue = queueOf(list(1, 2, 3))
+
+// Create a queue the boring way!
+val queue = Queue<Int>()
+
+// Put stuff into a queue!
+queue.append(4)
+
+// Get stuff out!
+val nextValue = queue.next()
+
+// Iterate!
+for (item in queue)
+  println("Another one popped off the queue!")
+----
 
