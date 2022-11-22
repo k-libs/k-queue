@@ -3,6 +3,9 @@ package io.klibs.collections
 /**
  * Creates a new [Queue] instance wrapping the given values.
  *
+ * The created queue will have an initial capacity equal to the number of args
+ * passed.
+ *
  * Example:
  * ```
  * val queue = queueOf(1, 2, 3)
@@ -10,15 +13,56 @@ package io.klibs.collections
  * queue.next() // 1
  * queue.next() // 2
  * queue.next() // 3
+ * ```
+ *
+ * @param values Values to append to the newly created queue.
+ *
+ * @return A new queue wrapping the given values.
  */
 fun <T> queueOf(vararg values: T) = Queue<T>(values.size).apply { values.forEach { append(it) } }
 
+/**
+ * Creates a new [Queue] instance wrapping the given values.
+ *
+ * Example:
+ * ```
+ * val queue = queueOf(listOf(1, 2, 3))
+ *
+ * queue.next() // 1
+ * queue.next() // 2
+ * queue.next() // 3
+ * ```
+ *
+ * @param values Values to append to the newly created queue.
+ *
+ * @return A new queue wrapping the given values.
+ */
 fun <T> queueOf(values: Iterable<T>) =
   if (values is Collection)
     Queue<T>(values.size).apply { values.forEach { append(it) } }
   else
     Queue<T>().apply { values.forEach { append(it) } }
 
+/**
+ * # FIFO Queue
+ *
+ * Example:
+ * ```
+ * // Create a new queue
+ * val queue = Queue<Int>()
+ *
+ * for (i in 1 .. 3)
+ *   queue += i
+ *
+ * for (i in 1 .. 3)
+ *   require(stack.next() == i)
+ * ```
+ *
+ * @param T Type of items that will be appended to this queue.
+ *
+ * @author Elizabeth Paige Harper - https://github.com/foxcapades
+ * @since 1.0.0
+ */
 @Suppress("UNCHECKED_CAST", "ReplaceSizeZeroCheckWithIsEmpty")
 class Queue<T> : Collection<T>, Iterator<T> {
   private var buffer: Array<Any?>
