@@ -2,6 +2,10 @@
 :source-highlighter: highlightjs
 :lib-version: 0.1.0
 
+image:https://img.shields.io/badge/license-MIT-green[GitHub]
+image:https://img.shields.io/badge/docs-dokka-brightgreen[link="https://k-libs.github.io/k-queue/dokka/0.1.0/k-queue/io.klibs.collections/index.html"]
+image:https://img.shields.io/maven-central/v/io.k-libs/queue[link="https://search.maven.org/artifact/io.k-libs/queue"]
+
 A pure Kotlin FIFO queue implementation.
 
 == Import
