@@ -55,7 +55,7 @@ fun <T> queueOf(values: Iterable<T>) =
  *   queue += i
  *
  * for (i in 1 .. 3)
- *   require(stack.next() == i)
+ *   require(queue.next() == i)
  * ```
  *
  * @param T Type of items that will be appended to this queue.
@@ -267,5 +267,5 @@ class Queue<T> : Collection<T>, Iterator<T> {
   }
 }
 
-inline fun min(a: Int, b: Int) = if (a < b) a else b
-inline fun max(a: Int, b: Int) = if (a > b) a else b
+private inline fun min(a: Int, b: Int) = if (a < b) a else b
+private inline fun max(a: Int, b: Int) = if (a > b) a else b
