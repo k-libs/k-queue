@@ -63,7 +63,7 @@ fun <T> queueOf(values: Iterable<T>) =
  * @author Elizabeth Paige Harper - https://github.com/foxcapades
  * @since 1.0.0
  */
-@Suppress("UNCHECKED_CAST", "ReplaceSizeZeroCheckWithIsEmpty")
+@Suppress("UNCHECKED_CAST", "ReplaceSizeZeroCheckWithIsEmpty", "ReplaceSizeCheckWithIsNotEmpty")
 class Queue<T> : Collection<T>, Iterator<T> {
   private var buffer: Array<Any?>
   private var head: Int
@@ -142,6 +142,21 @@ class Queue<T> : Collection<T>, Iterator<T> {
 
     buffer[tail] = value
     size++
+  }
+
+  /**
+   * Clears all elements from this queue.
+   *
+   * The capacity of the queue will not change as a result of this action.
+   *
+   * This operation is `O(n)` where `n` is the current [size] of the queue.
+   */
+  fun clear() {
+    for (i in indices)
+      buffer[index(i)] = null
+
+    head = 0
+    size = 0
   }
 
   /**
