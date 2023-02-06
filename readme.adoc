@@ -1,7 +1,7 @@
 = K-Queue
 :source-highlighter: highlightjs
-:lib-version: 0.2.0
-:feature-version: 0.2.0
+:lib-version: 0.3.0
+:feature-version: 0.3.0
 :gh-docs-url: https://k-libs.github.io/k-queue/dokka
 :package-name: io.klibs.collections
 
@@ -55,6 +55,9 @@ for (item in queue)
 [%header, cols="1m,2,9"]
 |===
 | Version | Documentation | Description
+| v0.3.0
+| link:{gh-docs-url}/0.3.0/queue/{package-name}/[Dokka]
+| Breaking minor rewrite, see https://github.com/k-libs/k-queue/releases/tag/v0.3.0[release notes].
 
 | v0.2.0
 | link:{gh-docs-url}/0.2.0/queue/{package-name}/[Dokka]
