@@ -63,10 +63,11 @@ fun <T> queueOf(values: Iterable<T>) =
  * @author Elizabeth Paige Harper - https://github.com/foxcapades
  * @since 1.0.0
  */
-@Suppress("UNCHECKED_CAST", "ReplaceSizeZeroCheckWithIsEmpty", "ReplaceSizeCheckWithIsNotEmpty")
-class Queue<T> : Collection<T>, Iterator<T> {
+class Queue<T> {
   private var buffer: Array<Any?>
+
   private var head: Int
+
   private var scale: Float
 
   private inline val tail
@@ -83,7 +84,7 @@ class Queue<T> : Collection<T>, Iterator<T> {
   /**
    * Current size of this queue.
    */
-  override var size: Int
+  var size: Int
     private set
 
   /**
@@ -91,6 +92,28 @@ class Queue<T> : Collection<T>, Iterator<T> {
    */
   var capacity: Int
     private set
+
+  /**
+   * `true` if this [Queue] contains zero items.
+   */
+  inline val isEmpty get() = size == 0
+
+  /**
+   * `true` if this [Queue] contains one or more items.
+   */
+  inline val isNotEmpty get() = size > 0
+
+  /**
+   * Last valid index in this [Queue].
+   *
+   * If this [Queue] is empty, [lastIndex] will be `-1`.
+   */
+  inline val lastIndex get() = size - 1
+
+  /**
+   * Returns the range of valid indices in this [Queue].
+   */
+  inline val indices get() = 0 .. lastIndex
 
   /**
    * Constructs a new [Queue] instance.
@@ -145,6 +168,29 @@ class Queue<T> : Collection<T>, Iterator<T> {
   }
 
   /**
+   * Removes and returns the value from the head of the queue.
+   *
+   * @return The value that was at the head of the queue when this method was
+   * called.
+   *
+   * @throws NoSuchElementException If the queue has no next element.
+   */
+  @Suppress("UNCHECKED_CAST")
+  fun next(): T {
+    if (size == 0)
+      throw NoSuchElementException()
+
+    val out = buffer[head] as T
+    buffer[head] = null
+    head++
+    if (head == capacity)
+      head = 0
+    size--
+
+    return out
+  }
+
+  /**
    * Clears all elements from this queue.
    *
    * The capacity of the queue will not change as a result of this action.
@@ -166,45 +212,13 @@ class Queue<T> : Collection<T>, Iterator<T> {
    *
    * @throws NoSuchElementException If the queue has no next element.
    */
-  fun peekNext(): T {
+  @Suppress("UNCHECKED_CAST")
+  fun peek(): T {
     if (size > 0)
       return buffer[head] as T
     else
       throw NoSuchElementException()
   }
-
-  /**
-   * Tests whether this queue contains at least one more element.
-   *
-   * @return Whether this queue contains at least one more element.
-   */
-  override fun hasNext() = size > 0
-
-  /**
-   * Removes and returns the value from the head of the queue.
-   *
-   * @return The value that was at the head of the queue when this method was
-   * called.
-   *
-   * @throws NoSuchElementException If the queue has no next element.
-   */
-  override fun next(): T {
-    if (size == 0)
-      throw NoSuchElementException()
-
-    val out = buffer[head] as T
-    buffer[head] = null
-    head++
-    if (head == capacity)
-      head = 0
-    size--
-
-    return out
-  }
-
-  override fun iterator() = this
-
-  override fun isEmpty() = size == 0
 
   /**
    * Alias for [append].
@@ -221,6 +235,7 @@ class Queue<T> : Collection<T>, Iterator<T> {
    * @throws IndexOutOfBoundsException If [i] is less than zero or is greater
    * than or equal to [size].
    */
+  @Suppress("UNCHECKED_CAST")
   operator fun get(i: Int): T {
     if (i < 0 || i >= size)
       throw IndexOutOfBoundsException("attempted to access item $i in a queue with a size of $size")
@@ -228,14 +243,77 @@ class Queue<T> : Collection<T>, Iterator<T> {
       return buffer[index(i)] as T
   }
 
-  override fun contains(element: T): Boolean {
+  /**
+   * Tests whether this [Queue] contains the given item.
+   *
+   * This function iterates through the items in the `Queue` and tests each one
+   * until it either finds an entry matching the given [element] or it reaches
+   * the end of the `Queue` items.
+   *
+   * @param element Item to test for.
+   *
+   * @return `true` if this [Queue] contains an item that is equal to the given
+   * [element], otherwise `false`.
+   */
+  operator fun contains(element: T): Boolean {
     for (i in indices)
       if (buffer[index(i)] == element)
         return true
     return false
   }
 
-  override fun containsAll(elements: Collection<T>) = all { contains(it) }
+  /**
+   * Tests whether this [Queue] contains all the given [elements].
+   *
+   * This function calls [contains] for each given element in [elements] until
+   * it either finds an element that does not exist in this [Queue] (at which
+   * point it returns `false`), or until it reaches the end of the array of
+   * given [elements].
+   *
+   * @param elements Elements to test for.
+   *
+   * @return `true` if this [Queue] contains all the given [elements], otherwise
+   * `false`.
+   */
+  fun containsAll(vararg elements: T) = elements.all { contains(it) }
+
+  /**
+   * Tests whether this [Queue] contains all the given [elements].
+   *
+   * This function calls [contains] for each given element in [elements] until
+   * it either finds an element that does not exist in this [Queue] (at which
+   * point it returns `false`), or until it reaches the end of the collection of
+   * given [elements].
+   *
+   * @param elements Elements to test for.
+   *
+   * @return `true` if this [Queue] contains all the given [elements], otherwise
+   * `false`.
+   */
+  fun containsAll(elements: Collection<T>) = elements.all { contains(it) }
+
+  inline fun destructiveForEach(fn: (T) -> Unit) {
+    while (isNotEmpty)
+      fn(next())
+  }
+
+  inline fun nonDestructiveForEach(fn: (T) -> Unit) {
+    var i = 0
+    val l = lastIndex
+    while (i < l)
+      fn(get(i++))
+  }
+
+  fun destructiveIterator() = object {
+    operator fun hasNext() = isNotEmpty
+    operator fun next() = this@Queue.next()
+  }
+
+  fun nonDestructiveIterator() = object {
+    private var i = 0;
+    operator fun hasNext() = i < lastIndex
+    operator fun next() = get(i++)
+  }
 
   private inline fun index(i: Int): Int {
     return (head + i).let { if (it >= capacity) it - capacity else it }
