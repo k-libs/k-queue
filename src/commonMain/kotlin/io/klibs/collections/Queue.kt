@@ -292,11 +292,31 @@ class Queue<T> {
    */
   fun containsAll(elements: Collection<T>) = elements.all { contains(it) }
 
+  /**
+   * Calls the given function on every element in this [Queue] as each element
+   * is removed.
+   *
+   * The elements will be passed to the given function in the order they are
+   * popped from the `Queue`.
+   *
+   * @param fn Function that will be passed every element in this `Queue` as
+   * each element is removed.
+   */
   inline fun destructiveForEach(fn: (T) -> Unit) {
     while (isNotEmpty)
       fn(next())
   }
 
+  /**
+   * Calls the given function on every element in this [Queue].
+   *
+   * The elements will be passed to the given function in the order they appear
+   * in the `Queue`.
+   *
+   * Unlike [destructiveForEach], this method does not alter the queue.
+   *
+   * @param fn Function that will be passed every element in this `Queue`.
+   */
   inline fun nonDestructiveForEach(fn: (T) -> Unit) {
     var i = 0
     val l = lastIndex
@@ -304,16 +324,60 @@ class Queue<T> {
       fn(get(i++))
   }
 
+  /**
+   * Returns a destructive, consuming iterator that pops elements from this
+   * [Queue] as it is iterated.
+   *
+   * @return A destructive iterator.
+   */
   fun destructiveIterator() = object {
     operator fun hasNext() = isNotEmpty
     operator fun next() = this@Queue.next()
   }
 
+  /**
+   * Returns a non-destructive iterator that iterates over the elements in this
+   * [Queue].
+   *
+   * @return A non-destructive iterator.
+   */
   fun nonDestructiveIterator() = object {
     private var i = 0;
     operator fun hasNext() = i < lastIndex
     operator fun next() = get(i++)
   }
+
+  /**
+   * Copies the contents of this [Queue] into an array constructed by the given
+   * [provider].
+   *
+   * **Example**
+   * ```kotlin
+   * queue.copyToArray(::Array)
+   * ```
+   *
+   * @param provider Array instance provider that will be called once to get an
+   * instance of an array of type [T] of size [size].
+   *
+   * @return The array copy of this [Queue].
+   */
+  fun copyToArray(provider: (size: Int, init: (Int) -> T) -> Array<T>) = provider(size, ::get)
+
+  /**
+   * Pops the contents of this [Queue] into an array constructed by the given
+   * [provider].
+   *
+   * **Example**
+   * ```kotlin
+   * queue.flushToArray(::Array)
+   * ```
+   *
+   * @param provider Array instance provider that will be called once to get an
+   * instance of an array of type [T] of size [size].
+   *
+   * @return The array containing the former contents of this [Queue].
+   */
+  fun flushToArray(provider: (size: Int, init: (Int) -> T) -> Array<T>) = provider(size) { next() }
 
   private inline fun index(i: Int): Int {
     return (head + i).let { if (it >= capacity) it - capacity else it }
